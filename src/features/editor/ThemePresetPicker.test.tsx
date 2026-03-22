@@ -69,13 +69,35 @@ function renderPicker(overrides: {
 
 describe('ThemePresetPicker', () => {
   it('shows top search, style filter, and compact random controls', () => {
-    renderPicker()
+    const { container } = renderPicker()
+    const filterCombo = container.querySelector('.theme-preset-filter-combo')
 
     expect(screen.getByRole('button', { name: 'Random' })).toBeInTheDocument()
     expect(screen.getByLabelText('Search presets')).toBeInTheDocument()
-    expect(screen.getByLabelText('Filter community presets by style')).toBeInTheDocument()
+    expect(screen.getByLabelText('Filter presets by style')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Search 2 presets')).toBeInTheDocument()
     expect(screen.queryByText('Generate first, then fine-tune once the preview feels close.')).not.toBeInTheDocument()
+    expect(filterCombo?.children[1]).toHaveClass('theme-preset-style-filter')
+    expect(filterCombo?.children[2]).toHaveClass('theme-preset-random-slot')
+  })
+
+  it('lists all styles, built-ins, then community styles in the filter dropdown', () => {
+    renderPicker()
+
+    const styleSelect = screen.getByLabelText('Filter presets by style') as HTMLSelectElement
+    const options = Array.from(styleSelect.options).map((option) => ({
+      label: option.textContent,
+      value: option.value,
+      disabled: option.disabled,
+    }))
+
+    expect(options).toEqual([
+      { label: 'All styles', value: 'all-styles', disabled: false },
+      { label: '----------------', value: 'opencode-divider', disabled: true },
+      { label: 'OpenCode built-ins', value: 'opencode-builtins', disabled: false },
+      { label: '----------------', value: 'community-divider', disabled: true },
+      { label: 'Warm', value: 'warm', disabled: false },
+    ])
   })
 
   it('applies a random visible preset from the filtered list', () => {
@@ -91,12 +113,10 @@ describe('ThemePresetPicker', () => {
     randomSpy.mockRestore()
   })
 
-  it('keeps built-in presets collapsed by default and shows their count', () => {
+  it('keeps built-in presets collapsed by default', () => {
     renderPicker()
 
     const builtinToggle = screen.getByRole('button', { name: /OpenCode built-ins/i })
-
-    expect(builtinToggle).toHaveTextContent('(1)')
 
     expect(screen.queryByText('Aura')).not.toBeInTheDocument()
 
@@ -122,12 +142,24 @@ describe('ThemePresetPicker', () => {
   it('filters community presets by style', () => {
     renderPicker()
 
-    fireEvent.change(screen.getByLabelText('Filter community presets by style'), {
+    fireEvent.change(screen.getByLabelText('Filter presets by style'), {
       target: { value: 'warm' },
     })
 
     expect(screen.getByText('Community')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /OpenCode built-ins/i })).not.toBeInTheDocument()
+  })
+
+  it('filters built-in presets from the style dropdown', () => {
+    renderPicker()
+
+    fireEvent.change(screen.getByLabelText('Filter presets by style'), {
+      target: { value: 'opencode-builtins' },
+    })
+
+    expect(screen.getByRole('button', { name: /OpenCode built-ins/i })).toBeInTheDocument()
+    expect(screen.getByText('Aura')).toBeInTheDocument()
+    expect(screen.queryByText('Community')).not.toBeInTheDocument()
   })
 
   it('allows collapsing style groups', () => {

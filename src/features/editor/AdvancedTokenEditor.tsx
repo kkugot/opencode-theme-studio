@@ -1,31 +1,49 @@
-import type { ThemeTokenName, ThemeTokens } from '../../domain/theme/model'
+import { THEME_TOKEN_NAMES, type ThemeTokenName, type ThemeTokens } from '../../domain/theme/model'
 import { getColorInputValue, normalizeColorValue } from '../../domain/theme/color'
 
-const tokenSections: Array<{
-  title: string
-  tokens: ThemeTokenName[]
-}> = [
+function isSurfaceToken(token: ThemeTokenName) {
+  return token.startsWith('background') || token.startsWith('border')
+}
+
+function isDiffToken(token: ThemeTokenName) {
+  return token.startsWith('diff')
+}
+
+function isMarkdownToken(token: ThemeTokenName) {
+  return token.startsWith('markdown')
+}
+
+function isSyntaxToken(token: ThemeTokenName) {
+  return token.startsWith('syntax')
+}
+
+const tokenSections = [
   {
     title: 'Core',
-    tokens: ['primary', 'secondary', 'accent', 'text', 'textMuted', 'selectedListItemText'],
+    tokens: THEME_TOKEN_NAMES.filter(
+      (token) => !isSurfaceToken(token) && !isDiffToken(token) && !isMarkdownToken(token) && !isSyntaxToken(token),
+    ),
   },
   {
     title: 'Surfaces',
-    tokens: ['background', 'backgroundPanel', 'backgroundElement', 'backgroundMenu', 'border', 'borderActive', 'borderSubtle'],
+    tokens: THEME_TOKEN_NAMES.filter(isSurfaceToken),
   },
   {
     title: 'Diffs',
-    tokens: ['diffAdded', 'diffRemoved', 'diffContext', 'diffHunkHeader'],
+    tokens: THEME_TOKEN_NAMES.filter(isDiffToken),
   },
   {
     title: 'Markdown',
-    tokens: ['markdownHeading', 'markdownCode'],
+    tokens: THEME_TOKEN_NAMES.filter(isMarkdownToken),
   },
   {
     title: 'Syntax',
-    tokens: ['syntaxKeyword', 'syntaxFunction', 'syntaxString'],
+    tokens: THEME_TOKEN_NAMES.filter(isSyntaxToken),
   },
-]
+] satisfies Array<{
+  title: string
+  tokens: ThemeTokenName[]
+}>
 
 type AdvancedTokenEditorProps = {
   resolvedTokens: ThemeTokens

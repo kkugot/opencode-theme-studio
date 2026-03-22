@@ -15,8 +15,11 @@ const mockState = vi.hoisted(() => ({
 
 vi.mock('../domain/presets/themePresets', () => ({
   REMIX_STRENGTHS: ['subtle', 'balanced', 'wild'],
-  THEME_PRESETS: [],
-  applyThemePresetToDraft: (_preset: unknown, draft: ThemeDraft) => draft,
+  THEME_PRESETS: [{ id: 'random-default', name: 'Random Default' }],
+  applyThemePresetToDraft: (preset: { name?: string }, draft: ThemeDraft) => ({
+    ...draft,
+    name: preset.name ?? draft.name,
+  }),
   createRandomSemanticModeSelection: (mode: 'dark' | 'light') => ({
     name: 'Randomized',
     palette: ['#112233', '#445566', '#778899'],
@@ -185,11 +188,11 @@ function DraftInitializer({ draft }: { draft?: ThemeDraft }) {
   return null
 }
 
-function renderPage(initialDraft?: ThemeDraft) {
+function renderPage(initialDraft?: ThemeDraft, startupSource?: 'default' | 'persisted' | 'shared' | null) {
   return render(
     <ThemeStoreProvider>
       <DraftInitializer draft={initialDraft} />
-      <ThemeEditorPage />
+      <ThemeEditorPage startupSource={startupSource} />
     </ThemeStoreProvider>,
   )
 }
@@ -202,7 +205,7 @@ afterEach(() => {
 
 describe('ThemeEditorPage', () => {
   it('switches between the editor tabs', () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     expect(screen.getByTestId('preset-picker')).toBeInTheDocument()
 
@@ -212,7 +215,7 @@ describe('ThemeEditorPage', () => {
     fireEvent.click(screen.getByRole('tab', { name: 'Tuner' }))
     expect(screen.getByTestId('advanced-editor')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Advanced' }))
+    fireEvent.click(screen.getByRole('tab', { name: '{...}' }))
     expect(screen.getByTestId('json-editor')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('tab', { name: 'Export' }))
@@ -228,8 +231,38 @@ describe('ThemeEditorPage', () => {
     expect(screen.queryByTestId('preset-picker')).not.toBeInTheDocument()
   })
 
+  it('applies a random preset on a default load and keeps Presets open', async () => {
+    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
+
+    renderPage(undefined, 'default')
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Theme name')).toHaveValue('Random Default')
+    })
+
+    expect(screen.getByTestId('preset-picker')).toBeInTheDocument()
+    expect(screen.queryByTestId('advanced-editor')).not.toBeInTheDocument()
+
+    randomSpy.mockRestore()
+  })
+
+  it('applies a random preset on a persisted reload and keeps Presets open', async () => {
+    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0)
+
+    renderPage(undefined, 'persisted')
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Theme name')).toHaveValue('Random Default')
+    })
+
+    expect(screen.getByTestId('preset-picker')).toBeInTheDocument()
+    expect(screen.queryByTestId('advanced-editor')).not.toBeInTheDocument()
+
+    randomSpy.mockRestore()
+  })
+
   it('keeps the inspire tab open after applying a preset', () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     fireEvent.click(screen.getByRole('button', { name: 'apply preset' }))
 
@@ -238,7 +271,7 @@ describe('ThemeEditorPage', () => {
   })
 
   it('keeps save actions in the editor tabs without the legacy metadata row', () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     expect(screen.getByLabelText('Theme name')).toBeInTheDocument()
     expect(screen.getByRole('switch', { name: 'Switch to light mode' })).toBeInTheDocument()
@@ -276,7 +309,7 @@ describe('ThemeEditorPage', () => {
   })
 
   it('updates the generated theme when a generated palette color changes', () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     fireEvent.click(screen.getByRole('tab', { name: 'Mixer' }))
     fireEvent.click(screen.getByRole('button', { name: 'generate palette' }))
@@ -286,7 +319,7 @@ describe('ThemeEditorPage', () => {
   })
 
   it('keeps the generated mixer palette stable across dark and light mode switches', async () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     fireEvent.click(screen.getByRole('tab', { name: 'Mixer' }))
     fireEvent.click(screen.getByRole('button', { name: 'generate palette' }))
@@ -303,7 +336,7 @@ describe('ThemeEditorPage', () => {
   })
 
   it('shows a stable extracted palette in Mixer for loaded themes without a generated palette', async () => {
-    renderPage()
+    renderPage(undefined, 'persisted')
 
     fireEvent.click(screen.getByRole('tab', { name: 'Mixer' }))
 
@@ -334,7 +367,7 @@ describe('ThemeEditorPage', () => {
 
     renderPage(draft)
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Advanced' }))
+    fireEvent.click(screen.getByRole('tab', { name: '{...}' }))
     fireEvent.click(screen.getByRole('button', { name: 'apply json' }))
     fireEvent.click(screen.getByRole('tab', { name: 'Tuner' }))
 

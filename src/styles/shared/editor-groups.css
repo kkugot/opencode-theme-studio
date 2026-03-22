@@ -1,0 +1,60 @@
+.editor-group {
+  display: grid;
+  gap: 6px;
+  padding-top: 0;
+}
+
+.editor-group:first-child {
+  padding-top: 0;
+}
+
+.editor-group-header {
+  position: relative;
+  align-items: center;
+  padding: 0 0 6px;
+  border-bottom: 0;
+  user-select: none;
+}
+
+.editor-group-header::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--editor-header-line-soft) 34%, var(--hairline-faint)) 0%,
+    color-mix(in srgb, var(--editor-header-line-soft) 18%, transparent) 58%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.editor-group-header-copy {
+  align-items: flex-start;
+}
+
+.editor-group-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.editor-group-label {
+  margin: 0;
+  color: var(--editor-group-label);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  user-select: none;
+}
+
+.editor-group-caption {
+  max-width: 27rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}

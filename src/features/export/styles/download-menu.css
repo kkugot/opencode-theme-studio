@@ -1,0 +1,101 @@
+.download-menu {
+  position: relative;
+}
+
+.download-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--download-button-border, var(--button-border-hover));
+  border-radius: 12px;
+  background: var(--download-button-bg, var(--button-bg));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--download-button-text, var(--text));
+  font-size: 0.79rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+
+.editor-pane-footer .download-menu-trigger:focus,
+.editor-pane-footer .download-menu-trigger:focus-visible,
+.editor-pane-footer .download-menu-item:focus,
+.editor-pane-footer .download-menu-item:focus-visible {
+  outline: none;
+}
+
+.download-menu-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.download-menu-trigger::marker {
+  content: '';
+}
+
+.download-menu[open] .download-menu-trigger,
+.download-menu-trigger:hover {
+  border-color: var(--download-button-border, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--download-button-bg, var(--button-bg-hover)) 84%,
+    var(--download-button-border, var(--accent)) 16%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: var(--download-button-text, var(--text));
+}
+
+.download-menu-caret {
+  font-size: 0.78rem;
+  transform: translateY(-1px);
+}
+
+.download-menu-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 16;
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid var(--button-border-hover);
+  border-radius: 12px;
+  background: var(--panel-recessed-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.download-menu-item {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.download-menu-item:hover {
+  border-color: var(--button-border);
+  background: var(--button-bg);
+}
+
+.download-menu-item-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.download-menu-item-file {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}

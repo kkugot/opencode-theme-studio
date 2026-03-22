@@ -1,0 +1,99 @@
+.preview-surface.console-preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  aspect-ratio: auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  isolation: isolate;
+  box-shadow: var(--preview-surface-shadow);
+  font-family: var(--font-mono);
+  --terminal-font-size: 8px;
+  font-size: var(--terminal-font-size);
+  line-height: 1.45;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 220ms linear, color 220ms linear, box-shadow 220ms linear;
+  --terminal-frame-border: rgba(206, 210, 220, 0.34);
+  --terminal-frame-highlight: rgba(255, 255, 255, 0.42);
+  --terminal-titlebar-bg: rgba(235, 235, 235, 0.88);
+  --terminal-titlebar-border: rgba(206, 210, 220, 0.4);
+  --terminal-titlebar-text: rgba(112, 112, 116, 0.82);
+  --terminal-titlebar-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  --terminal-titlebar-gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 72%);
+  --terminal-titlebar-dot-close: #ff5f57;
+  --terminal-titlebar-dot-minimize: #ffbd2e;
+  --terminal-titlebar-dot-zoom: #28c840;
+  --terminal-titlebar-dot-border: rgba(24, 24, 28, 0.32);
+  --terminal-scrollbar-thumb: rgba(66, 74, 90, 0.56);
+  --terminal-scrollbar-track: rgba(17, 20, 28, 0.14);
+  --console-background: rgba(17, 20, 28, 0.14);
+  --console-thinking-accent: #76d2e8;
+  --console-sidebar-width: 258px;
+}
+
+.preview-surface.console-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--terminal-frame-border);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.preview-surface.console-preview[data-mode='dark'] {
+  --terminal-frame-border: rgba(95, 104, 124, 0.4);
+  --terminal-frame-highlight: rgba(244, 246, 255, 0.16);
+  --terminal-titlebar-bg: rgba(24, 28, 37, 0.84);
+  --terminal-titlebar-border: rgba(96, 106, 128, 0.34);
+  --terminal-titlebar-text: rgba(206, 214, 232, 0.84);
+  --terminal-titlebar-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --terminal-titlebar-gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 72%);
+  --terminal-titlebar-dot-close: rgba(255, 95, 87, 0.88);
+  --terminal-titlebar-dot-minimize: rgba(255, 189, 46, 0.88);
+  --terminal-titlebar-dot-zoom: rgba(40, 205, 65, 0.88);
+  --terminal-titlebar-dot-border: rgba(7, 11, 18, 0.68);
+  --terminal-scrollbar-thumb: rgba(192, 203, 227, 0.44);
+  --terminal-scrollbar-track: rgba(5, 8, 14, 0.34);
+  box-shadow: 0 34px 82px rgba(0, 0, 0, 0.5), 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.preview-surface.console-preview[data-mode='dark']::after {
+  border-width: 0.5px;
+}
+
+.preview-surface.console-preview[data-mode='dark'] .console-macos-header {
+  border-bottom-width: 0.5px;
+}
+
+.preview-surface.console-preview[data-mode='light'] {
+  --terminal-frame-border: rgba(166, 176, 196, 0.4);
+  --terminal-frame-highlight: rgba(255, 255, 255, 0.48);
+  --terminal-titlebar-bg: rgba(236, 238, 243, 0.92);
+  --terminal-titlebar-border: rgba(166, 176, 196, 0.56);
+  --terminal-titlebar-text: rgba(82, 91, 107, 0.88);
+  --terminal-titlebar-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  --terminal-titlebar-gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 72%);
+  --terminal-titlebar-dot-close: #ff5f57;
+  --terminal-titlebar-dot-minimize: #ffbd2e;
+  --terminal-titlebar-dot-zoom: #28c840;
+  --terminal-titlebar-dot-border: rgba(24, 24, 28, 0.36);
+  --terminal-scrollbar-thumb: rgba(66, 74, 90, 0.6);
+  --terminal-scrollbar-track: rgba(17, 20, 28, 0.15);
+  box-shadow: 0 24px 64px rgba(44, 49, 59, 0.18), 0 10px 24px rgba(44, 49, 59, 0.12);
+}
+
+.preview-surface.console-preview[data-mode='light']::after {
+  border-width: 0.5px;
+}
+
+.preview-surface.console-preview[data-mode='light'] .console-macos-header {
+  border-bottom-width: 0.5px;
+}
+

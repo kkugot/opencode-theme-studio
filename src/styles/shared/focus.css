@@ -1,0 +1,30 @@
+.editor-tab:focus-visible,
+.advanced-reset-icon:focus-visible,
+.contrast-fix-button:focus-visible,
+.export-button:focus-visible,
+.export-name-input:focus-visible,
+.theme-action-copy:focus-visible,
+.theme-action-download-item:focus-visible,
+.theme-random-button:focus-visible,
+.theme-preset-option-main:focus-visible,
+.theme-preset-action-button:focus-visible,
+.theme-preset-group-toggle:focus-visible,
+.semantic-color-suggestion:focus-visible,
+.theme-preset-option:focus-visible,
+.download-menu-trigger:focus-visible,
+.download-menu-item:focus-visible,
+.editor-share-install-summary:focus-visible,
+.install-command-copy:focus-visible,
+.json-editor-input:focus-visible,
+.semantic-generated-palette-chip:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .color-value {
+    opacity: 1;
+    pointer-events: auto;
+    user-select: text;
+  }
+}

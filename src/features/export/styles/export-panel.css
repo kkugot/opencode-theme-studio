@@ -1,0 +1,106 @@
+.export-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.export-actions-compact {
+  grid-template-columns: 1fr;
+}
+
+.export-panel {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 0;
+  margin-top: auto;
+}
+
+.export-name-field {
+  display: grid;
+  gap: 6px;
+}
+
+.export-name-label {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.export-name-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--field-border);
+  border-radius: 10px;
+  background: var(--field-bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.export-name-input::placeholder {
+  color: var(--text-muted);
+}
+
+.export-button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--button-border);
+  border-radius: 12px;
+  background: var(--button-bg);
+  color: var(--text-soft);
+  text-align: left;
+  box-shadow: none;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.export-button:hover {
+  border-color: var(--button-border-hover);
+  background: var(--button-bg-hover);
+}
+
+.export-button.active {
+  background: linear-gradient(180deg, rgba(250, 251, 254, 0.98), rgba(234, 238, 245, 0.96));
+  color: #0b1018;
+  box-shadow: 0 20px 32px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.export-button-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.export-button-title {
+  font-size: 1rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+}
+
+.export-button-file {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  opacity: 0.74;
+  text-overflow: ellipsis;
+}
+
+.export-button-meta {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  justify-items: end;
+  color: inherit;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}

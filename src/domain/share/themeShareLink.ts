@@ -29,6 +29,10 @@ export function buildSharedDraftId({ themeSlug, encodedPayload }: SharedThemeLin
   return `shared:${normalizeThemeSlug(themeSlug)}:${encodedPayload.trim()}`
 }
 
+export function clearThemeShareLocation(location: Pick<Location, 'pathname'> = window.location) {
+  window.history.replaceState(window.history.state, '', location.pathname)
+}
+
 function parseThemeShareSearch(search: string) {
   const normalizedSearch = search.startsWith('?') ? search.slice(1) : search
 

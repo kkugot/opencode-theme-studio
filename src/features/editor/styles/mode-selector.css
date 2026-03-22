@@ -1,0 +1,111 @@
+.mode-selector {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 36px;
+  height: 50px;
+  margin-top: -10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--editor-identity-kicker-color);
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.mode-selector-orbit {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 999px;
+  pointer-events: none;
+  transition: transform 220ms ease;
+}
+
+.mode-selector-glyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.26;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease, color 200ms ease;
+}
+
+.mode-selector-glyph svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mode-selector-glyph-moon {
+  color: var(--mode-selector-night-color);
+  transform: translateY(-1px) rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+.mode-selector-glyph-sun {
+  color: var(--mode-selector-day-color);
+  transform: translateY(155%) rotate(100deg) scale(0.9);
+}
+
+.mode-selector:hover {
+  transform: translateY(-1px);
+}
+
+.mode-selector:hover .mode-selector-orbit,
+.mode-selector:focus-visible .mode-selector-orbit {
+  transform: scale(1.06);
+}
+
+.editor-theme-title-field:has(.mode-selector:hover) .editor-identity-kicker-button,
+.editor-theme-title-field:has(.editor-identity-kicker-button:hover) .editor-identity-kicker-button,
+.editor-theme-title-field:has(.mode-selector:focus-visible) .editor-identity-kicker-button,
+.editor-theme-title-field:has(.editor-identity-kicker-button:focus-visible) .editor-identity-kicker-button {
+  color: var(--editor-identity-kicker-hover-color);
+}
+
+.editor-theme-title-field:has(.mode-selector:hover) .mode-selector:not([aria-checked='true']) .mode-selector-glyph-moon,
+.editor-theme-title-field:has(.editor-identity-kicker-button:hover) .mode-selector:not([aria-checked='true']) .mode-selector-glyph-moon,
+.editor-theme-title-field:has(.mode-selector:focus-visible) .mode-selector:not([aria-checked='true']) .mode-selector-glyph-moon,
+.editor-theme-title-field:has(.editor-identity-kicker-button:focus-visible) .mode-selector:not([aria-checked='true']) .mode-selector-glyph-moon {
+  color: var(--mode-selector-night-hover-color);
+}
+
+.editor-theme-title-field:has(.mode-selector:hover) .mode-selector[aria-checked='true'] .mode-selector-glyph-sun,
+.editor-theme-title-field:has(.editor-identity-kicker-button:hover) .mode-selector[aria-checked='true'] .mode-selector-glyph-sun,
+.editor-theme-title-field:has(.mode-selector:focus-visible) .mode-selector[aria-checked='true'] .mode-selector-glyph-sun,
+.editor-theme-title-field:has(.editor-identity-kicker-button:focus-visible) .mode-selector[aria-checked='true'] .mode-selector-glyph-sun {
+  color: var(--mode-selector-day-hover-color);
+}
+
+.mode-selector:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.mode-selector[aria-checked='true'] .mode-selector-glyph-moon {
+  transform: translateY(-155%) rotate(-100deg) scale(0.72);
+  opacity: 0.24;
+}
+
+.mode-selector[aria-checked='true'] .mode-selector-glyph-sun {
+  transform: translateY(-1px) rotate(0deg) scale(1.12);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-selector,
+  .mode-selector-orbit,
+  .mode-selector-glyph {
+    transition: none;
+  }
+}

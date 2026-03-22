@@ -10,8 +10,8 @@ export const EDITOR_TAB_OPTIONS: Array<{ id: EditorTab; label: string }> = [
   { id: 'presets', label: 'Presets' },
   { id: 'basic', label: 'Mixer' },
   { id: 'full', label: 'Tuner' },
-  { id: 'json', label: 'Advanced' },
   { id: 'save', label: 'Export' },
+  { id: 'json', label: '{...}' },
 ]
 
 export function getInitialEditorTab(location: { search: string; hash: string }) {

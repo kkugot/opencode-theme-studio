@@ -1,0 +1,80 @@
+.editor-tabs {
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  gap: 24px;
+  width: auto;
+  max-width: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 3px 0 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.editor-tab {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  min-height: 28px;
+  min-width: 0;
+  padding: 0 10px 1px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--editor-tab-color);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+  text-align: left;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: color 150ms ease;
+}
+
+.editor-tab::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  right: -12px;
+  height: 1.95rem;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity 180ms ease, box-shadow 180ms ease;
+  z-index: -1;
+}
+
+.editor-tab:hover {
+  color: var(--editor-tab-hover-color);
+}
+
+.editor-tab:hover::before {
+  opacity: 1;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--hairline-soft) 72%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 7%, transparent),
+    0 1px 0 color-mix(in srgb, var(--canvas-depth) 30%, transparent);
+}
+
+.editor-tab.active {
+  color: var(--editor-tab-active-color);
+  font-weight: 560;
+}
+
+.editor-tab.active::before {
+  opacity: 1;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--hairline) 82%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--canvas-depth) 58%, transparent),
+    0 2px 0 color-mix(in srgb, var(--canvas-depth) 34%, transparent);
+}

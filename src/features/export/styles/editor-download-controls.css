@@ -1,0 +1,49 @@
+.editor-download-bar .download-menu {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+}
+
+.editor-download-bar .download-menu-trigger {
+  min-height: 100%;
+  padding: 0 15px 0 14px;
+  border: 0;
+  border-left: 1px solid
+    color-mix(
+      in srgb,
+      var(--download-control-border, var(--field-border)) 62%,
+      var(--download-control-accent, var(--accent)) 38%
+  );
+  border-radius: 0 11px 11px 0;
+  background: color-mix(
+    in srgb,
+    var(--download-control-accent, var(--accent)) 12%,
+    var(--download-control-panel, var(--button-bg))
+  );
+  box-shadow: none;
+  color: var(--download-control-text, var(--text));
+}
+
+.editor-download-bar .download-menu[open] .download-menu-trigger,
+.editor-download-bar .download-menu-trigger:hover {
+  border-color: transparent;
+  border-left-color: color-mix(
+    in srgb,
+    var(--download-control-border, var(--field-border)) 58%,
+    var(--download-control-accent, var(--accent)) 42%
+  );
+  background: color-mix(
+    in srgb,
+    var(--download-control-accent, var(--accent)) 18%,
+    var(--download-control-panel, var(--button-bg-hover))
+  );
+  box-shadow: none;
+}
+
+.editor-download-bar .download-menu-trigger:active {
+  background: color-mix(
+    in srgb,
+    var(--download-control-accent, var(--accent)) 30%,
+    var(--download-control-panel, var(--button-bg-hover))
+  );
+}

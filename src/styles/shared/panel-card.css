@@ -1,0 +1,4 @@
+.panel-card {
+  display: grid;
+  gap: 12px;
+}

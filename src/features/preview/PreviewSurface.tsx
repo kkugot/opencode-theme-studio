@@ -687,7 +687,7 @@ export function PreviewSurface(props: PreviewSurfaceProps) {
           <aside className="console-sidebar">
             <div className="console-sidebar-content">
               <p className="console-sidebar-intro" style={{ color: tokens.text }}>
-                Opencode Theme Generator
+                OpenCode Theme Studio
               </p>
 
               <section className="console-sidebar-section">
@@ -799,7 +799,7 @@ export function PreviewSurface(props: PreviewSurfaceProps) {
                   <span style={{ color: tokens.success }}>•</span>
                   <span>
                     <span style={{ color: tokens.textMuted }}>Open</span>
-                    <span style={{ color: tokens.text }}>Code Theme Generator</span>
+                    <span style={{ color: tokens.text }}>Code Theme Studio</span>
                   </span>
                   <span>{PROJECT_VERSION}</span>
                 </div>
