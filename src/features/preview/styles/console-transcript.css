@@ -1,0 +1,330 @@
+.console-command-bar,
+.console-user-intent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 6px;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-left: 2px solid transparent;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear,
+    box-shadow 220ms linear;
+}
+
+.console-command-text {
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--terminal-font-size);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.console-command-stats {
+  flex: 0 0 auto;
+  font-size: var(--terminal-font-size);
+  white-space: nowrap;
+}
+
+.console-user-intent {
+  justify-content: flex-start;
+  font-size: var(--terminal-font-size);
+}
+
+.console-transcript-shell {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.console-transcript-viewport {
+  min-height: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.console-transcript-viewport::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.console-transcript {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.console-transcript-scrollbar {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  bottom: 0;
+  width: 4px;
+  background: var(--console-background);
+  pointer-events: none;
+}
+
+.console-transcript-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  min-height: 16px;
+  background: var(--terminal-scrollbar-thumb);
+  border-radius: 0;
+  transform: translateY(0);
+}
+
+.console-line {
+  margin: 0;
+  font-size: var(--terminal-font-size);
+  line-height: 1.45;
+}
+
+.console-thinking-block {
+  display: grid;
+  gap: 10px;
+  padding-left: 12px;
+  border-left: 2px solid;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear;
+}
+
+.console-thinking-heading,
+.console-thinking-copy {
+  margin: 0;
+  font-size: calc(var(--terminal-font-size) * 1.2);
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.console-thinking-heading {
+  letter-spacing: 0.01em;
+}
+
+.console-thinking-heading span:first-child {
+  font-style: italic;
+}
+
+.console-file-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.console-file-badge,
+.console-file-badge-name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 16px;
+  padding: 0 6px;
+  border-radius: 2px;
+  font-size: var(--terminal-font-size);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.console-code-block {
+  display: grid;
+  gap: 2px;
+  padding: 6px 8px;
+}
+
+.console-code-line {
+  margin: 0;
+  font-size: var(--terminal-font-size);
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.console-tool-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-left: 6px;
+}
+
+.console-tool-inline-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.console-tool-inline-main span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.console-tool-icon {
+  flex: 0 0 auto;
+}
+
+.console-tool-state {
+  flex: 0 0 auto;
+  font-size: 0.85em;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.console-tool-card {
+  display: grid;
+  gap: 6px;
+  padding: 8px 8px 8px 10px;
+  border-left: 2px solid;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear;
+}
+
+.console-tool-card-title {
+  font-size: 0.95em;
+}
+
+.console-diff-block {
+  display: grid;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.console-diff-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+}
+
+.console-diff-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+}
+
+.console-diff-content {
+  min-width: 0;
+  padding-right: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.console-diff-inline {
+  padding: 0 6px;
+}
+
+.console-todo-list,
+.console-question-list {
+  display: grid;
+  gap: 3px;
+}
+
+.console-todo-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.console-todo-row span:last-child {
+  min-width: 0;
+  white-space: normal;
+}
+
+.console-question-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.console-question-row span:first-child {
+  min-width: 0;
+  flex: 1;
+  padding-right: 8px;
+}
+
+.console-part-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.console-part-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 18px;
+  padding: 0 6px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.85em;
+}
+
+.console-prompt-card {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  border-left: 2px solid;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear;
+}
+
+.console-prompt-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.console-prompt-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.console-prompt-option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 18px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 0.85em;
+}
+
+.console-question-option {
+  min-height: 18px;
+  padding: 3px 6px;
+  border-radius: 2px;
+}
+
+.console-message-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 10px;
+  border-left: 2px solid;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear;
+}
+
+.console-read-list {
+  display: grid;
+  gap: 2px;
+  padding-left: 12px;
+  font-size: var(--terminal-font-size);
+  line-height: 1.4;
+}
+
+.console-read-list div {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

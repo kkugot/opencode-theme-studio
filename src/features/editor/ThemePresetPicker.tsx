@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import { createPortal } from 'react-dom'
 import { getPresetCategoryLabel, getPresetCategoryTokens } from '../../domain/presets/presetCategories'
 import { type RemixStrength, type ThemePreset } from '../../domain/presets/themePresets'
 import type { ThemeMode, ThemeTokens } from '../../domain/theme/model'
@@ -6,6 +7,7 @@ import type { ThemeMode, ThemeTokens } from '../../domain/theme/model'
 type ThemePresetPickerProps = {
   activeMode: ThemeMode
   presets: ThemePreset[]
+  toolbarPortalTarget?: HTMLElement | null
   selectedPresetId?: string | null
   selectedPresetPreview?: ThemePreset | null
   canRemixSelectedPreset: boolean
@@ -25,10 +27,15 @@ type ThemePresetGroup = {
 type PresetStyleOption = {
   value: string
   label: string
+  disabled?: boolean
 }
 
 const ALL_STYLE_FILTER = 'all-styles'
 const BUILTIN_GROUP_ID = 'opencode'
+const BUILTIN_STYLE_FILTER = 'opencode-builtins'
+const BUILTIN_STYLE_FILTER_LABEL = 'OpenCode built-ins'
+const BUILTIN_STYLE_FILTER_DIVIDER = 'opencode-divider'
+const COMMUNITY_STYLE_FILTER_DIVIDER = 'community-divider'
 
 const REMIX_ACTIONS: Array<{ strength: RemixStrength; label: string }> = [
   { strength: 'subtle', label: 'Soft' },
@@ -219,6 +226,7 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
   const {
     activeMode,
     presets,
+    toolbarPortalTarget,
     selectedPresetId,
     selectedPresetPreview,
     canRemixSelectedPreset,
@@ -244,7 +252,12 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
       cancelAnimationFrame(scrollAnimationFrameRef.current)
     }
   }, [])
-  const styleOptions = useMemo<PresetStyleOption[]>(() => {
+  const hasBuiltinPresets = useMemo(
+    () => presets.some((preset) => preset.source === 'opencode'),
+    [presets],
+  )
+
+  const communityStyleOptions = useMemo<PresetStyleOption[]>(() => {
     const optionMap = new Map<string, string>()
 
     for (const preset of presets) {
@@ -266,15 +279,40 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
       .map(([value, label]) => ({ value, label }))
   }, [presets])
 
+  const styleOptions = useMemo<PresetStyleOption[]>(() => {
+    const nextOptions: PresetStyleOption[] = [
+      { value: ALL_STYLE_FILTER, label: 'All styles' },
+    ]
+
+    if (hasBuiltinPresets) {
+      nextOptions.push(
+        { value: BUILTIN_STYLE_FILTER_DIVIDER, label: '----------------', disabled: true },
+        { value: BUILTIN_STYLE_FILTER, label: BUILTIN_STYLE_FILTER_LABEL },
+      )
+    }
+
+    if (communityStyleOptions.length > 0) {
+      nextOptions.push({ value: COMMUNITY_STYLE_FILTER_DIVIDER, label: '----------------', disabled: true })
+      nextOptions.push(...communityStyleOptions)
+    }
+
+    return nextOptions
+  }, [communityStyleOptions, hasBuiltinPresets])
+
+  const selectableStyleOptions = useMemo(
+    () => styleOptions.filter((option) => !option.disabled),
+    [styleOptions],
+  )
+
   useEffect(() => {
     if (styleFilter === ALL_STYLE_FILTER) {
       return
     }
 
-    if (!styleOptions.some((option) => option.value === styleFilter)) {
+    if (!selectableStyleOptions.some((option) => option.value === styleFilter)) {
       setStyleFilter(ALL_STYLE_FILTER)
     }
-  }, [styleFilter, styleOptions])
+  }, [selectableStyleOptions, styleFilter])
 
   const styleScopedPresets = useMemo(() => {
     const hasStyleFilter = styleFilter !== ALL_STYLE_FILTER
@@ -286,6 +324,10 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
 
       if (!hasStyleFilter) {
         return true
+      }
+
+      if (styleFilter === BUILTIN_STYLE_FILTER) {
+        return preset.source === 'opencode'
       }
 
       if (preset.source === 'opencode') {
@@ -319,7 +361,7 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
   }, [normalizedSearchValue, styleScopedPresets])
 
   const presetGroups = useMemo<ThemePresetGroup[]>(() => {
-    const hasStyleFilter = styleFilter !== ALL_STYLE_FILTER
+    const shouldShowBuiltinGroup = styleFilter === ALL_STYLE_FILTER || styleFilter === BUILTIN_STYLE_FILTER
     const builtinPresets = searchablePresets.filter((preset) => preset.source === 'opencode')
     const categoryMap = new Map<string, ThemePresetGroup>()
 
@@ -347,7 +389,7 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
 
     const groups: ThemePresetGroup[] = []
 
-    if (!hasStyleFilter && builtinPresets.length > 0) {
+    if (shouldShowBuiltinGroup && builtinPresets.length > 0) {
       groups.push({
         id: BUILTIN_GROUP_ID,
         kind: 'builtin',
@@ -370,6 +412,10 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
   const searchPlaceholder = `Search ${formatCountLabel(availablePresetCount, 'preset')}`
 
   function isGroupExpanded(groupId: string) {
+    if (groupId === BUILTIN_GROUP_ID && styleFilter === BUILTIN_STYLE_FILTER) {
+      return true
+    }
+
     return normalizedSearchValue.length > 0 || !collapsedGroupIds.has(groupId)
   }
 
@@ -491,10 +537,10 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
     scrollPresetIntoView(randomPreset.id)
   }
 
-  return (
-    <section className="theme-preset-panel panel-card">
-      <div ref={toolbarRef} className="theme-preset-toolbar">
-        <div className="theme-preset-filter-combo">
+  const toolbar = (
+    <div ref={toolbarRef} className="theme-preset-toolbar">
+      <div className="theme-preset-filter-combo">
+        <div className="theme-preset-search-slot">
           <input
             type="search"
             className="theme-preset-search-input"
@@ -506,31 +552,37 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
               setSearchValue(event.target.value)
             }}
           />
+        </div>
 
-          <label className="theme-preset-style-filter">
-            <select
-              className="theme-preset-style-select"
-              value={styleFilter}
-              aria-label="Filter community presets by style"
-              onChange={(event) => {
-                setStyleFilter(event.target.value)
-              }}
-            >
-              <option value={ALL_STYLE_FILTER}>All styles</option>
+        <label className="theme-preset-style-filter">
+          <select
+            className="theme-preset-style-select"
+            value={styleFilter}
+            aria-label="Filter presets by style"
+            onChange={(event) => {
+              setStyleFilter(event.target.value)
+            }}
+          >
+            {styleOptions.map((option) => (
+              <option key={option.value} value={option.value} disabled={option.disabled}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
 
-              {styleOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
+        <div className="theme-preset-random-slot">
           <button type="button" className="theme-random-button theme-random-button-inline" onClick={applyRandomVisiblePreset}>
             Random
           </button>
         </div>
       </div>
+    </div>
+  )
+
+  return (
+    <section className="theme-preset-panel panel-card">
+      {toolbarPortalTarget ? createPortal(toolbar, toolbarPortalTarget) : toolbar}
 
       <div className="theme-preset-list editor-groups">
         {visiblePresetCount === 0 ? (
@@ -552,8 +604,6 @@ export function ThemePresetPicker(props: ThemePresetPickerProps) {
                   </span>
                   <span className="editor-group-label">{group.title}</span>
                 </span>
-
-                <span className="theme-preset-group-count">({group.presets.length})</span>
               </button>
 
               {isGroupExpanded(group.id) ? (

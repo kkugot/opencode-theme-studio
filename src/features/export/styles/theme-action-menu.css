@@ -1,0 +1,274 @@
+.theme-action-menu-panel {
+  align-self: start;
+  gap: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.theme-action-group {
+  gap: 12px;
+}
+
+.theme-action-step-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 0 0 20px;
+  color: color-mix(in srgb, var(--text) 34%, var(--text-muted) 66%);
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.theme-action-step-list li::marker {
+  color: color-mix(in srgb, var(--text) 50%, var(--text-muted) 50%);
+}
+
+.theme-action-inline-code {
+  padding: 0 6px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--download-control-surface, var(--field-bg)) 84%, transparent);
+  color: color-mix(in srgb, var(--text) 76%, var(--text-muted) 24%);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.theme-action-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--download-control-border, var(--field-border)) 76%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--download-control-surface, var(--button-bg)) 92%, transparent);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.theme-action-copy-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
+.theme-action-copy:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--download-control-accent, var(--accent)) 44%, var(--download-control-border, var(--field-border)) 56%);
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 12%, var(--download-control-surface, var(--button-bg)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.theme-action-copy:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.theme-action-copy:disabled {
+  opacity: 0.52;
+}
+
+.theme-action-copy-icon-only {
+  width: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 10px;
+  flex: 0 0 auto;
+  background: color-mix(in srgb, var(--download-control-surface, var(--button-bg)) 58%, transparent);
+  box-shadow: 0 8px 24px rgba(8, 10, 18, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(1.12);
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
+}
+
+.theme-action-copy-icon-only .theme-action-copy-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.theme-action-copy-icon-only[data-state='copied'] {
+  border-color: color-mix(in srgb, var(--download-control-accent, var(--accent)) 46%, var(--download-control-border, var(--field-border)) 54%);
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 14%, var(--download-control-surface, var(--button-bg)));
+}
+
+.theme-action-menu-panel .theme-action-copy {
+  border: 0;
+  background: color-mix(in srgb, var(--download-control-surface, var(--button-bg)) 86%, transparent);
+  box-shadow:
+    0 8px 20px rgba(8, 10, 18, 0.16),
+    0 2px 6px rgba(8, 10, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.theme-action-menu-panel .theme-action-copy:hover:not(:disabled) {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 12%, var(--download-control-surface, var(--button-bg)));
+  box-shadow:
+    0 12px 26px rgba(8, 10, 18, 0.18),
+    0 4px 10px rgba(8, 10, 18, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.theme-action-menu-panel .theme-action-copy-icon-only {
+  background: color-mix(in srgb, var(--download-control-surface, var(--button-bg)) 76%, transparent);
+}
+
+.theme-action-menu-panel .theme-action-copy-icon-only[data-state='copied'] {
+  border-color: transparent;
+  box-shadow:
+    0 12px 28px rgba(8, 10, 18, 0.16),
+    0 3px 8px rgba(8, 10, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.theme-action-code-shell {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  overflow: auto;
+  max-height: min(180px, 32vh);
+  padding: 11px 46px 11px 13px;
+  border: 1px solid var(--json-editor-border);
+  border-radius: 12px;
+  background: var(--json-editor-bg);
+  box-shadow: none;
+}
+
+.theme-action-code-shell-command {
+  min-height: 0;
+}
+
+.theme-action-copy-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.theme-action-code {
+  display: block;
+  color: var(--json-editor-text);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  line-height: 1.42;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.theme-action-code-command {
+  color: var(--json-editor-text);
+  font-size: 0.64rem;
+  line-height: 1.42;
+}
+
+.theme-action-download-list {
+  display: grid;
+  gap: 0;
+}
+
+.theme-action-download-list-minimal {
+  gap: 0;
+}
+
+.theme-action-download-item.theme-action-download-item-minimal {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 0;
+  border: 0;
+  border-top: 1px solid var(--hairline-faint);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  box-shadow: none;
+  transition: background-color 150ms ease;
+}
+
+.theme-action-download-list-minimal > .theme-action-download-item:first-child {
+  border-top: 0;
+}
+
+.theme-action-download-item.theme-action-download-item-minimal:hover {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  box-shadow: none;
+}
+
+.theme-action-download-item.theme-action-download-item-minimal.is-default {
+  background: transparent;
+}
+
+.theme-action-download-label {
+  color: var(--text);
+  font-size: 0.79rem;
+  font-weight: 620;
+  letter-spacing: 0.01em;
+}
+
+.theme-action-download-file {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--text) 34%, var(--text-muted) 66%);
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theme-action-share-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 13px;
+  border: 1px solid var(--json-editor-border);
+  border-radius: 12px;
+  background: var(--json-editor-bg);
+  box-shadow: none;
+  overflow: visible;
+}
+
+.theme-action-share-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--json-editor-text);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.01em;
+  line-height: 1.42;
+}
+
+.theme-action-share-shell:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.theme-action-share-input:focus,
+.theme-action-share-input:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .theme-action-step-list {
+    font-size: 0.82rem;
+  }
+
+  .theme-action-code-command {
+    font-size: 0.64rem;
+  }
+
+  .theme-action-download-item.theme-action-download-item-minimal {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

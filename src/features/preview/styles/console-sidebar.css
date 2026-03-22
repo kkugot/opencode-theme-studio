@@ -1,0 +1,150 @@
+.console-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-self: stretch;
+  align-self: stretch;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 12px 18px 10px 12px;
+  background: var(--console-panel);
+  box-sizing: border-box;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear,
+    box-shadow 220ms linear;
+}
+
+.console-sidebar-content {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.console-sidebar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: calc(var(--terminal-font-size) * 1.8);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.console-sidebar-link-icon {
+  width: calc(var(--terminal-font-size) * 1.7);
+  height: calc(var(--terminal-font-size) * 1.7);
+  flex: 0 0 auto;
+}
+
+.console-sidebar-intro {
+  margin: 0;
+  font-size: calc(var(--terminal-font-size) * 1.1);
+  line-height: 1.32;
+  font-weight: 600;
+}
+
+.console-sidebar-section {
+  display: grid;
+  gap: 2px;
+}
+
+.console-sidebar-heading {
+  font-size: calc(var(--terminal-font-size) * 1.28);
+  font-weight: 600;
+}
+
+.console-sidebar-stat {
+  font-size: calc(var(--terminal-font-size) * 1.22);
+  line-height: 1.25;
+}
+
+.console-sidebar-list,
+.console-sidebar-files {
+  display: grid;
+  gap: 1px;
+}
+
+.console-sidebar-todos {
+  display: grid;
+  gap: 1px;
+}
+
+.console-sidebar-list-row,
+.console-sidebar-file-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 6px;
+  min-width: 0;
+  font-size: calc(var(--terminal-font-size) * 1.22);
+  line-height: 1.24;
+}
+
+.console-sidebar-list-row span:nth-child(2),
+.console-sidebar-file-path {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.console-sidebar-bullet {
+  width: 0.9ch;
+  text-align: center;
+}
+
+.console-sidebar-file-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.console-sidebar-todo-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 6px;
+  min-width: 0;
+  font-size: calc(var(--terminal-font-size) * 1.22);
+  line-height: 1.24;
+}
+
+.console-sidebar-file-path {
+  white-space: nowrap;
+}
+
+.console-sidebar-file-delta {
+  white-space: nowrap;
+}
+
+.console-sidebar-todo-state {
+  white-space: nowrap;
+}
+
+.console-sidebar-todo-copy {
+  min-width: 0;
+  white-space: normal;
+}
+
+.console-sidebar-footer {
+  display: grid;
+  gap: 8px;
+  padding-top: 2px;
+  margin-top: auto;
+}
+
+.console-sidebar-path,
+.console-sidebar-version {
+  font-size: calc(var(--terminal-font-size) * 1.2);
+}
+
+.console-sidebar-version {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

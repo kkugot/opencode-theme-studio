@@ -1,0 +1,209 @@
+:root {
+  color-scheme: dark;
+  font-family: "Avenir Next", "Instrument Sans", "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #f3f5f7;
+  background: #07090d;
+  --font-body: "Avenir Next", "Instrument Sans", "Segoe UI", sans-serif;
+  --font-editorial: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-mono: "Berkeley Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --canvas: #07090d;
+  --canvas-depth: #0a0c10;
+  --panel-recessed: rgba(14, 17, 23, 0.92);
+  --panel-recessed-strong: rgba(16, 19, 26, 0.97);
+  --panel-hero: rgba(19, 23, 34, 0.94);
+  --panel-soft: rgba(255, 255, 255, 0.024);
+  --panel-softer: rgba(255, 255, 255, 0.018);
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-soft: rgba(255, 255, 255, 0.05);
+  --hairline-faint: rgba(255, 255, 255, 0.035);
+  --text: #f3f5f7;
+  --text-soft: #bcc4d3;
+  --text-muted: #6f7786;
+  --accent: #8fb4ff;
+  --accent-soft: rgba(143, 180, 255, 0.18);
+  --porcelain: #f2f3f7;
+  --porcelain-ink: #11151b;
+  --porcelain-shadow: rgba(0, 0, 0, 0.28);
+  --success: #9fc9b2;
+  --warning: #d9b882;
+  --danger: #d29090;
+  --shadow-deep: 0 36px 120px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 18px 46px rgba(0, 0, 0, 0.26);
+  --selection-bg: rgba(143, 180, 255, 0.28);
+  --selection-text: #ffffff;
+  --shell-html-background: radial-gradient(circle at 12% -8%, rgba(105, 141, 201, 0.28), transparent 46%),
+    radial-gradient(circle at 88% 8%, rgba(80, 111, 170, 0.24), transparent 40%),
+    linear-gradient(180deg, #141e2e 0%, #0f1726 52%, #0a111d 100%);
+  --shell-backdrop-background: radial-gradient(circle at 18% -2%, rgba(136, 172, 230, 0.22), transparent 38%),
+    radial-gradient(circle at 100% 14%, rgba(88, 121, 182, 0.2), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(124, 152, 197, 0.05) 34%, transparent 62%);
+  --editor-fade-background: linear-gradient(
+    180deg,
+    rgba(7, 9, 13, 0),
+    rgba(7, 9, 13, 0.48) 46%,
+    rgba(7, 9, 13, 0.84) 76%,
+    rgba(7, 9, 13, 1)
+  );
+  --panel-card-background: linear-gradient(180deg, rgba(16, 20, 28, 0.95), rgba(12, 15, 21, 0.92));
+  --panel-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --preview-surface-shadow: 0 34px 82px rgba(0, 0, 0, 0.5), 0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  --tabs-track-bg: rgba(255, 255, 255, 0.028);
+  --tab-active-bg: rgba(255, 255, 255, 0.05);
+  --editor-tab-color: var(--text-muted);
+  --editor-tab-hover-color: var(--text-soft);
+  --editor-tab-active-color: var(--text);
+  --editor-header-line-edge: rgba(111, 119, 134, 0.08);
+  --editor-header-line-soft: rgba(122, 152, 229, 0.18);
+  --editor-header-line-core: rgba(143, 180, 255, 0.34);
+  --editor-header-line-glow: rgba(143, 180, 255, 0.18);
+  --editor-horizon-soft: rgba(106, 130, 198, 0.14);
+  --editor-horizon-core: rgba(132, 166, 246, 0.18);
+  --editor-horizon-tail: rgba(74, 96, 157, 0.1);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+  --save-indicator-idle: rgba(255, 255, 255, 0.25);
+  --editor-group-label: rgba(196, 205, 222, 0.78);
+  --editor-group-count: rgba(255, 255, 255, 0.28);
+  --color-row-label-base: rgba(191, 202, 224, 0.78);
+  --color-row-label-hover-mix: #ffffff;
+  --color-value-text: rgba(156, 168, 186, 0.34);
+  --color-value-focus-bg: rgba(143, 180, 255, 0.045);
+  --color-value-focus-text: rgba(205, 216, 234, 0.84);
+  --color-value-focus-ring: rgba(173, 193, 234, 0.24);
+  --swatch-frame-bg: rgba(255, 255, 255, 0.022);
+  --swatch-shell-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+    0 0 0 1px rgba(7, 11, 18, 0.72), 0 4px 12px rgba(2, 4, 8, 0.34);
+  --swatch-surface-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -6px 12px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.24);
+  --advanced-reset-bg: rgba(236, 244, 255, 0.14);
+  --advanced-reset-bg-hover: rgba(236, 244, 255, 0.22);
+  --advanced-reset-color: var(--canvas);
+  --json-editor-border: rgba(255, 255, 255, 0.1);
+  --json-editor-bg: rgba(15, 19, 27, 0.42);
+  --json-editor-text: rgba(198, 209, 226, 0.84);
+  --status-error-text: rgba(210, 144, 144, 0.9);
+  --contrast-warning-text: #f1d3a3;
+  --contrast-warning-bg: rgba(217, 184, 130, 0.16);
+  --contrast-item-bg: rgba(255, 255, 255, 0.02);
+  --contrast-item-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  --contrast-fix-border: rgba(255, 255, 255, 0.05);
+  --contrast-fix-bg: rgba(255, 255, 255, 0.035);
+  --contrast-fix-bg-hover: rgba(255, 255, 255, 0.06);
+  --field-border: rgba(255, 255, 255, 0.08);
+  --field-bg: rgba(255, 255, 255, 0.03);
+  --button-border: rgba(255, 255, 255, 0.08);
+  --button-bg: rgba(255, 255, 255, 0.012);
+  --button-border-hover: rgba(255, 255, 255, 0.14);
+  --button-bg-hover: rgba(255, 255, 255, 0.026);
+  --focus-ring: rgba(143, 180, 255, 0.42);
+  --mode-selector-night-color: #86adff;
+  --mode-selector-night-hover-color: #acc7ff;
+  --mode-selector-day-color: #e2a04b;
+  --mode-selector-day-hover-color: #f0b466;
+  --editor-identity-kicker-color: var(--mode-selector-night-color);
+  --editor-identity-kicker-hover-color: var(--mode-selector-night-hover-color);
+}
+
+:root[data-ui-mode='light'] {
+  color-scheme: light;
+  color: #181c23;
+  background: #f1f1ee;
+  --canvas: #f1f1ee;
+  --canvas-depth: #e8e8e4;
+  --panel-recessed: rgba(255, 255, 255, 0.88);
+  --panel-recessed-strong: rgba(255, 255, 255, 0.94);
+  --panel-hero: rgba(255, 255, 255, 0.94);
+  --panel-soft: rgba(255, 255, 255, 0.88);
+  --panel-softer: rgba(255, 255, 255, 0.82);
+  --hairline: rgba(42, 46, 54, 0.2);
+  --hairline-soft: rgba(42, 46, 54, 0.14);
+  --hairline-faint: rgba(42, 46, 54, 0.1);
+  --text: #181c23;
+  --text-soft: #4a505b;
+  --text-muted: #737b88;
+  --accent: #48628c;
+  --accent-soft: rgba(72, 98, 140, 0.15);
+  --porcelain: #ffffff;
+  --porcelain-ink: #11151b;
+  --porcelain-shadow: rgba(30, 34, 41, 0.12);
+  --success: #1f6a3d;
+  --warning: #8a5b07;
+  --danger: #a94848;
+  --shadow-deep: 0 30px 84px rgba(38, 42, 50, 0.15);
+  --shadow-soft: 0 14px 38px rgba(38, 42, 50, 0.1);
+  --selection-bg: rgba(72, 98, 140, 0.2);
+  --selection-text: #182131;
+  --shell-html-background: radial-gradient(circle at 9% -6%, rgba(255, 255, 255, 0.84), transparent 44%),
+    radial-gradient(circle at 84% 6%, rgba(236, 237, 235, 0.62), transparent 42%),
+    linear-gradient(180deg, #f8f8f5 0%, #f0f0ed 56%, #e7e7e3 100%);
+  --shell-backdrop-background: radial-gradient(circle at 16% -2%, rgba(233, 234, 233, 0.46), transparent 38%),
+    radial-gradient(circle at 100% 14%, rgba(224, 225, 224, 0.36), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(246, 246, 244, 0.66) 34%, transparent 72%);
+  --editor-fade-background: linear-gradient(
+    180deg,
+    rgba(241, 241, 238, 0),
+    rgba(241, 241, 238, 0.72) 44%,
+    rgba(241, 241, 238, 0.92) 74%,
+    rgba(241, 241, 238, 1)
+  );
+  --panel-card-background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 248, 246, 0.92));
+  --panel-card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 14px 32px rgba(44, 49, 59, 0.1);
+  --preview-surface-shadow: 0 24px 64px rgba(44, 49, 59, 0.18), 0 10px 24px rgba(44, 49, 59, 0.12),
+    0 0 0 1px rgba(44, 49, 59, 0.18);
+  --tabs-track-bg: rgba(45, 50, 58, 0.08);
+  --tab-active-bg: rgba(45, 50, 58, 0.14);
+  --editor-tab-color: #8b7862;
+  --editor-tab-hover-color: #6f5e49;
+  --editor-tab-active-color: var(--text);
+  --editor-header-line-edge: rgba(177, 156, 119, 0.1);
+  --editor-header-line-soft: rgba(236, 206, 143, 0.26);
+  --editor-header-line-core: rgba(236, 177, 72, 0.38);
+  --editor-header-line-glow: rgba(244, 206, 129, 0.24);
+  --editor-horizon-soft: rgba(247, 223, 173, 0.22);
+  --editor-horizon-core: rgba(241, 191, 95, 0.16);
+  --editor-horizon-tail: rgba(227, 161, 57, 0.1);
+  --scrollbar-thumb: rgba(34, 39, 48, 0.24);
+  --save-indicator-idle: rgba(54, 60, 71, 0.32);
+  --editor-group-label: rgba(39, 44, 54, 0.86);
+  --editor-group-count: rgba(61, 67, 80, 0.38);
+  --color-row-label-base: rgba(44, 50, 62, 0.82);
+  --color-row-label-hover-mix: #171b22;
+  --color-value-text: rgba(73, 80, 94, 0.62);
+  --color-value-focus-bg: rgba(72, 98, 140, 0.1);
+  --color-value-focus-text: rgba(25, 31, 42, 0.9);
+  --color-value-focus-ring: rgba(72, 98, 140, 0.3);
+  --swatch-frame-bg: rgba(28, 33, 41, 0.08);
+  --swatch-shell-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), inset 0 -1px 0 rgba(28, 33, 41, 0.1),
+    0 0 0 1px rgba(54, 61, 72, 0.2), 0 4px 10px rgba(34, 40, 49, 0.12);
+  --swatch-surface-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 -5px 10px rgba(24, 31, 42, 0.14),
+    0 0 0 1px rgba(25, 31, 42, 0.1);
+  --advanced-reset-bg: rgba(241, 241, 238, 0.96);
+  --advanced-reset-bg-hover: rgba(255, 255, 255, 0.98);
+  --advanced-reset-color: #252c37;
+  --json-editor-border: rgba(45, 50, 58, 0.2);
+  --json-editor-bg: rgba(255, 255, 255, 0.56);
+  --json-editor-text: rgba(32, 38, 49, 0.88);
+  --status-error-text: rgba(162, 65, 65, 0.9);
+  --contrast-warning-text: #815100;
+  --contrast-warning-bg: rgba(196, 131, 45, 0.2);
+  --contrast-item-bg: rgba(31, 37, 47, 0.06);
+  --contrast-item-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --contrast-fix-border: rgba(45, 50, 58, 0.16);
+  --contrast-fix-bg: rgba(45, 50, 58, 0.08);
+  --contrast-fix-bg-hover: rgba(45, 50, 58, 0.14);
+  --field-border: rgba(45, 50, 58, 0.2);
+  --field-bg: rgba(255, 255, 255, 0.7);
+  --button-border: rgba(45, 50, 58, 0.2);
+  --button-bg: rgba(255, 255, 255, 0.56);
+  --button-border-hover: rgba(45, 50, 58, 0.28);
+  --button-bg-hover: rgba(255, 255, 255, 0.82);
+  --focus-ring: rgba(72, 98, 140, 0.44);
+  --mode-selector-night-color: #9ea8b6;
+  --mode-selector-night-hover-color: #b6bfca;
+  --mode-selector-day-color: #cb8118;
+  --mode-selector-day-hover-color: #e39a28;
+  --editor-identity-kicker-color: var(--mode-selector-day-color);
+  --editor-identity-kicker-hover-color: var(--mode-selector-day-hover-color);
+}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { serializeThemeFile } from '../domain/opencode/exportTheme'
 import {
   THEME_PRESETS,
@@ -24,15 +24,32 @@ import { SemanticColorEditor } from '../features/editor/SemanticColorEditor'
 import { PreviewSurface } from '../features/preview/PreviewSurface'
 import { selectExportThemeFile, selectResolvedMode, selectSemanticGroupAffectedTokens } from '../state/selectors'
 import { useThemeDraft, useThemeStoreActions } from '../state/theme-store-hooks'
+import type { HydratedDraftSource } from '../state/hydrateDraft'
 
-export function ThemeEditorPage() {
+type ThemeEditorPageProps = {
+  startupSource?: HydratedDraftSource | null
+}
+
+function pickRandomPreset(presets: ThemePreset[]) {
+  if (presets.length === 0) {
+    return null
+  }
+
+  const randomIndex = Math.floor(Math.random() * presets.length)
+
+  return presets[randomIndex] ?? null
+}
+
+export function ThemeEditorPage({ startupSource = null }: ThemeEditorPageProps) {
   const draft = useThemeDraft()
   const isLightMode = draft.activeMode === 'light'
   const [editorTab, setEditorTab] = useState<EditorTab>(() => getInitialEditorTab(window.location))
+  const [presetToolbarPortalTarget, setPresetToolbarPortalTarget] = useState<HTMLDivElement | null>(null)
   const [selectedPresetOrigin, setSelectedPresetOrigin] = useState<ThemePreset | null>(null)
   const [selectedPresetPreview, setSelectedPresetPreview] = useState<ThemePreset | null>(null)
   const [basicRandomPalette, setBasicRandomPalette] = useState<string[] | null>(null)
   const [basicRandomVariationSeed, setBasicRandomVariationSeed] = useState<number | null>(null)
+  const hasInitializedStartupPreset = useRef(false)
   const { hydrateDraft, setActiveMode, setDraftName, setSemanticGroup, setTokenOverride, resetTokenOverride, replaceModeDraft } =
     useThemeStoreActions()
   const { previewModel, editorSemanticGroups, derivedTokens, resolvedTokens, tokenNames, activeModeThemeFile, combinedThemeFile, themeSlug } =
@@ -56,6 +73,27 @@ export function ThemeEditorPage() {
       delete root.dataset.uiMode
     }
   }, [draft.activeMode])
+
+  useEffect(() => {
+    if (startupSource === 'shared' || startupSource === null || hasInitializedStartupPreset.current) {
+      return
+    }
+
+    hasInitializedStartupPreset.current = true
+    setEditorTab('presets')
+
+    const randomPreset = pickRandomPreset(THEME_PRESETS)
+
+    if (!randomPreset) {
+      return
+    }
+
+    setBasicRandomPalette(null)
+    setBasicRandomVariationSeed(null)
+    setSelectedPresetOrigin(randomPreset)
+    setSelectedPresetPreview(randomPreset)
+    hydrateDraft(applyThemePresetToDraft(randomPreset, draft))
+  }, [draft, hydrateDraft, startupSource])
 
   function exportMode(mode: 'dark' | 'light') {
     const themeFile = selectExportThemeFile(draft, mode)
@@ -142,6 +180,15 @@ export function ThemeEditorPage() {
     setActiveMode(isLightMode ? 'dark' : 'light')
   }
 
+  const editorContentClassName =
+    editorTab === 'presets' ? 'editor-content-pane editor-content-pane-with-toolbar' : 'editor-content-pane'
+  const editorStackClassName =
+    editorTab === 'json'
+      ? 'editor-stack editor-stack-json'
+      : editorTab === 'presets'
+        ? 'editor-stack editor-stack-presets'
+        : 'editor-stack'
+
   return (
     <main className="app-shell">
       <div className="app-backdrop" aria-hidden="true" />
@@ -188,67 +235,79 @@ export function ThemeEditorPage() {
           </div>
         </div>
 
-        <div className={editorTab === 'json' ? 'editor-stack editor-stack-json' : 'editor-stack'}>
+        <div className={editorContentClassName}>
           {editorTab === 'presets' ? (
-            <ThemePresetPicker
-              activeMode={draft.activeMode}
-              presets={THEME_PRESETS}
-              selectedPresetId={selectedPresetPreview?.id ?? null}
-              selectedPresetPreview={selectedPresetPreview}
-              canRemixSelectedPreset={Boolean(selectedPresetPreview?.palette)}
-              canUndoSelectedPreset={Boolean(
-                selectedPresetOrigin && selectedPresetPreview && selectedPresetOrigin !== selectedPresetPreview,
-              )}
-              onApplyPreset={applyPreset}
-              onRemixSelectedPreset={remixSelectedPreset}
-              onUndoSelectedPreset={undoPresetRemix}
+            <div
+              ref={(element) => {
+                setPresetToolbarPortalTarget(element)
+              }}
+              className="editor-pane-toolbar-slot"
             />
-          ) : editorTab === 'basic' ? (
-            <SemanticColorEditor
-              activeMode={draft.activeMode}
-              semanticGroups={editorSemanticGroups}
-              randomPalette={mixerPalette}
-              onRandomize={randomizeActiveMode}
-              onChangeRandomPaletteColor={updateRandomPaletteColor}
-              onChange={(group, value) => {
-                setSemanticGroup(draft.activeMode, group, value)
+          ) : null}
 
-                for (const token of selectSemanticGroupAffectedTokens(group)) {
+          <div className={editorStackClassName}>
+            {editorTab === 'presets' ? (
+              <ThemePresetPicker
+                activeMode={draft.activeMode}
+                presets={THEME_PRESETS}
+                toolbarPortalTarget={presetToolbarPortalTarget}
+                selectedPresetId={selectedPresetPreview?.id ?? null}
+                selectedPresetPreview={selectedPresetPreview}
+                canRemixSelectedPreset={Boolean(selectedPresetPreview?.palette)}
+                canUndoSelectedPreset={Boolean(
+                  selectedPresetOrigin && selectedPresetPreview && selectedPresetOrigin !== selectedPresetPreview,
+                )}
+                onApplyPreset={applyPreset}
+                onRemixSelectedPreset={remixSelectedPreset}
+                onUndoSelectedPreset={undoPresetRemix}
+              />
+            ) : editorTab === 'basic' ? (
+              <SemanticColorEditor
+                activeMode={draft.activeMode}
+                semanticGroups={editorSemanticGroups}
+                randomPalette={mixerPalette}
+                onRandomize={randomizeActiveMode}
+                onChangeRandomPaletteColor={updateRandomPaletteColor}
+                onChange={(group, value) => {
+                  setSemanticGroup(draft.activeMode, group, value)
+
+                  for (const token of selectSemanticGroupAffectedTokens(group)) {
+                    resetTokenOverride(draft.activeMode, token)
+                  }
+                }}
+              />
+            ) : editorTab === 'full' ? (
+              <AdvancedTokenEditor
+                resolvedTokens={resolvedTokens}
+                derivedTokens={derivedTokens}
+                overrides={draft.modes[draft.activeMode].tokenOverrides}
+                onChange={(token, value) => {
+                  setTokenOverride(draft.activeMode, token, value)
+                }}
+                onReset={(token) => {
                   resetTokenOverride(draft.activeMode, token)
-                }
-              }}
-            />
-          ) : editorTab === 'full' ? (
-            <AdvancedTokenEditor
-              resolvedTokens={resolvedTokens}
-              derivedTokens={derivedTokens}
-              overrides={draft.modes[draft.activeMode].tokenOverrides}
-              onChange={(token, value) => {
-                setTokenOverride(draft.activeMode, token, value)
-              }}
-              onReset={(token) => {
-                resetTokenOverride(draft.activeMode, token)
-              }}
-            />
-          ) : editorTab === 'save' ? (
-            <ThemeActionMenu
-              themeSlug={themeSlug}
-              themeFile={combinedThemeFile}
-              onDownloadDark={() => exportMode('dark')}
-              onDownloadLight={() => exportMode('light')}
-              onDownloadCombined={exportCombined}
-            />
-          ) : (
-            <JsonThemeEditor
-              themeFile={activeModeThemeFile}
-              combinedThemeFile={combinedThemeFile}
-              tokenNames={tokenNames}
-              activeMode={draft.activeMode}
-              onChange={(modeThemes) => {
-                applyJsonModeThemes(draft, tokenNames, modeThemes, replaceModeDraft)
-              }}
-            />
-          )}
+                }}
+              />
+            ) : editorTab === 'save' ? (
+              <ThemeActionMenu
+                themeSlug={themeSlug}
+                themeFile={combinedThemeFile}
+                onDownloadDark={() => exportMode('dark')}
+                onDownloadLight={() => exportMode('light')}
+                onDownloadCombined={exportCombined}
+              />
+            ) : (
+              <JsonThemeEditor
+                themeFile={activeModeThemeFile}
+                combinedThemeFile={combinedThemeFile}
+                tokenNames={tokenNames}
+                activeMode={draft.activeMode}
+                onChange={(modeThemes) => {
+                  applyJsonModeThemes(draft, tokenNames, modeThemes, replaceModeDraft)
+                }}
+              />
+            )}
+          </div>
         </div>
       </aside>
 

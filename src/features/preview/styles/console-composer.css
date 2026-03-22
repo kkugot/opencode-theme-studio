@@ -1,0 +1,100 @@
+.console-composer {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  max-width: none;
+  min-height: 64px;
+  margin: 8px 0 0;
+  padding: 9px 12px 8px;
+  border-left: 2px solid transparent;
+  border-top: 0;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear,
+    box-shadow 220ms linear;
+}
+
+.console-composer-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75ch;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--terminal-font-size);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.console-composer-input-copy {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.console-composer-selected-fragment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+}
+
+.console-composer-selection-sample {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.25em;
+  margin: 0 0.6ch;
+  padding: 0 0.28ch;
+  border-radius: 0;
+  font-size: var(--terminal-font-size);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.console-composer-attachment {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.25em;
+  padding: 0 0.5ch;
+  border-radius: 0;
+  font-size: var(--terminal-font-size);
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.console-composer-selected-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1ch;
+  min-height: 1.25em;
+  padding: 0;
+  border-radius: 0;
+  font-size: var(--terminal-font-size);
+  line-height: 1.25;
+}
+
+.console-composer-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.console-composer-build {
+  font-size: var(--terminal-font-size);
+  font-weight: 600;
+}
+
+.console-composer-meta-item,
+.console-composer-divider,
+.console-composer-variant {
+  font-size: var(--terminal-font-size);
+  white-space: nowrap;
+}
+
+.console-composer-variant {
+  font-weight: 600;
+}

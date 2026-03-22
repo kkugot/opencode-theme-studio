@@ -1,0 +1,211 @@
+.console-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 22px;
+  padding: 7px 16px 8px;
+  border-top: 1px solid var(--console-border-subtle);
+  background: var(--console-panel);
+  font-size: var(--terminal-font-size);
+  line-height: 1.2;
+}
+
+.console-statusbar {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: none;
+  border-top: 0;
+  background: var(--console-background);
+  padding-top: 6px;
+  transition: background-color 220ms linear, border-color 220ms linear, color 220ms linear,
+    box-shadow 220ms linear;
+}
+
+.console-statusbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.console-statusbar-label {
+  white-space: nowrap;
+}
+
+.console-thinking-indicator {
+  display: inline-flex;
+  align-items: center;
+  height: 4px;
+  flex: 0 0 auto;
+}
+
+.console-thinking-track {
+  position: relative;
+  width: 36px;
+  height: 4px;
+  overflow: hidden;
+  flex: 0 0 36px;
+}
+
+.console-thinking-track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at 1px 50%,
+      color-mix(in srgb, var(--console-thinking-accent) 24%, var(--console-background)) 1px,
+      transparent 1.2px
+    )
+    0 0 / 6px 100% repeat-x;
+  pointer-events: none;
+}
+
+.console-thinking-squares {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 4px;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.console-thinking-squares-ltr {
+  animation: console-thinking-pass-ltr 2200ms steps(12, end) infinite;
+  will-change: transform, opacity;
+}
+
+.console-thinking-squares-rtl {
+  animation: console-thinking-pass-rtl 2200ms steps(12, end) infinite;
+  will-change: transform, opacity;
+}
+
+.console-thinking-cell {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 0;
+}
+
+.console-thinking-cell:nth-child(1) {
+  left: 0;
+}
+
+.console-thinking-cell:nth-child(2) {
+  left: 5px;
+}
+
+.console-thinking-cell:nth-child(3) {
+  left: 10px;
+}
+
+.console-thinking-cell:nth-child(4) {
+  left: 15px;
+}
+
+.console-thinking-cell:nth-child(5) {
+  left: 20px;
+}
+
+.console-thinking-squares-ltr .console-thinking-cell:nth-child(1) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 26%, var(--console-background));
+}
+
+.console-thinking-squares-ltr .console-thinking-cell:nth-child(2) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 38%, var(--console-background));
+}
+
+.console-thinking-squares-ltr .console-thinking-cell:nth-child(3) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 52%, var(--console-background));
+}
+
+.console-thinking-squares-ltr .console-thinking-cell:nth-child(4) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 66%, var(--console-background));
+}
+
+.console-thinking-squares-ltr .console-thinking-cell:nth-child(5) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 82%, var(--console-background));
+}
+
+.console-thinking-squares-rtl .console-thinking-cell:nth-child(1) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 82%, var(--console-background));
+}
+
+.console-thinking-squares-rtl .console-thinking-cell:nth-child(2) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 66%, var(--console-background));
+}
+
+.console-thinking-squares-rtl .console-thinking-cell:nth-child(3) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 52%, var(--console-background));
+}
+
+.console-thinking-squares-rtl .console-thinking-cell:nth-child(4) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 38%, var(--console-background));
+}
+
+.console-thinking-squares-rtl .console-thinking-cell:nth-child(5) {
+  background: color-mix(in srgb, var(--console-thinking-accent) 26%, var(--console-background));
+}
+
+@keyframes console-thinking-pass-ltr {
+  0% {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+
+  35% {
+    transform: translateX(36px);
+  }
+
+  45% {
+    opacity: 1;
+    transform: translateX(36px);
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+    transform: translateX(36px);
+  }
+}
+
+@keyframes console-thinking-pass-rtl {
+  0%,
+  47% {
+    opacity: 0;
+    transform: translateX(36px);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translateX(30px);
+  }
+
+  79% {
+    opacity: 1;
+    transform: translateX(-26px);
+  }
+
+  89% {
+    opacity: 1;
+    transform: translateX(-26px);
+  }
+
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+}
+
+.console-statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+  margin-left: auto;
+}

@@ -1,0 +1,96 @@
+.console-macos-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  overflow: visible;
+  background: var(--terminal-titlebar-bg);
+  border-bottom: 1px solid var(--terminal-titlebar-border);
+  box-shadow: var(--terminal-titlebar-shadow);
+  transition: background-color 220ms linear, border-color 220ms linear, box-shadow 220ms linear,
+    color 220ms linear;
+}
+
+.console-macos-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--terminal-titlebar-gloss);
+  pointer-events: none;
+}
+
+.console-macos-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.console-macos-dots {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  display: flex;
+  gap: 6px;
+  transform: translateY(-50%);
+}
+
+.console-macos-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 0.5px var(--terminal-titlebar-dot-border);
+}
+
+.console-macos-dot-close {
+  background: var(--terminal-titlebar-dot-close);
+}
+
+.console-macos-dot-minimize {
+  background: var(--terminal-titlebar-dot-minimize);
+}
+
+.console-macos-dot-zoom {
+  background: var(--terminal-titlebar-dot-zoom);
+}
+
+.console-macos-title {
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--terminal-titlebar-text);
+  text-align: center;
+}
+
+.console-macos-titlewrap {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(20rem, calc(100% - 220px));
+  max-width: calc(100% - 120px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.console-macos-header-actions {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  bottom: 0;
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  transform: none;
+}

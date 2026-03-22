@@ -1,0 +1,15 @@
+@media (prefers-reduced-motion: reduce) {
+  .console-thinking-squares {
+    animation: none;
+  }
+
+  .console-thinking-squares-ltr {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  .console-thinking-squares-rtl {
+    opacity: 0;
+    transform: translateX(36px);
+  }
+}

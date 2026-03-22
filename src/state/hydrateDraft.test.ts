@@ -45,7 +45,8 @@ describe('getHydratedDraft', () => {
 
     const hydratedDraft = await getHydratedDraft()
 
-    expect(hydratedDraft).toBe(persistedDraft)
+    expect(hydratedDraft.draft).toBe(persistedDraft)
+    expect(hydratedDraft.source).toBe('shared')
     expect(decodeThemeInstallPayload).not.toHaveBeenCalled()
   })
 
@@ -80,7 +81,17 @@ describe('getHydratedDraft', () => {
     const hydratedDraft = await getHydratedDraft()
 
     expect(decodeThemeInstallPayload).toHaveBeenCalledWith(sharedTheme.encodedPayload, sharedTheme.themeSlug)
-    expect(hydratedDraft?.id).toBe(buildSharedDraftId(sharedTheme))
-    expect(hydratedDraft?.activeMode).toBe('light')
+    expect(hydratedDraft.draft?.id).toBe(buildSharedDraftId(sharedTheme))
+    expect(hydratedDraft.draft?.activeMode).toBe('light')
+    expect(hydratedDraft.source).toBe('shared')
+  })
+
+  it('returns the default source when there is no persisted or shared draft', async () => {
+    vi.mocked(loadCurrentDraft).mockResolvedValue(null)
+
+    const hydratedDraft = await getHydratedDraft()
+
+    expect(hydratedDraft.draft).toBeNull()
+    expect(hydratedDraft.source).toBe('default')
   })
 })

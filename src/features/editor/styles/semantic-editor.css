@@ -1,0 +1,103 @@
+.semantic-editor,
+.advanced-editor {
+  align-self: start;
+  align-content: start;
+  --semantic-suggestion-strip-min-width: 94px;
+  min-width: 0;
+}
+
+@media (min-width: 1261px) {
+  .semantic-editor {
+    max-width: 24.5rem;
+  }
+}
+
+.semantic-editor-toolbar-group {
+  padding-top: 0;
+  padding-bottom: 12px;
+}
+
+.semantic-editor-toolbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.semantic-editor-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.semantic-random-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  min-width: 7.5rem;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--download-control-border, var(--field-border)) 70%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--button-bg) 84%, transparent);
+  color: var(--text);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.semantic-random-button:hover {
+  border-color: color-mix(in srgb, var(--download-control-accent, var(--accent)) 46%, var(--download-control-border, var(--field-border)) 54%);
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 12%, var(--button-bg));
+}
+
+.semantic-generated-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 0 2px;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.semantic-generated-palette-chip {
+  position: relative;
+  display: block;
+  min-width: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--swatch-frame-bg);
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+    0 0 0 1px var(--hairline-soft);
+}
+
+.semantic-generated-palette-well {
+  justify-self: center;
+}
+
+.semantic-generated-palette-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.editor-groups {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}

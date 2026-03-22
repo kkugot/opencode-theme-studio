@@ -1,0 +1,279 @@
+.editor-content-pane {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.editor-content-pane.editor-content-pane-with-toolbar {
+  --editor-pane-toolbar-offset: 10px;
+  --editor-pane-toolbar-gap: 18px;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.editor-pane-toolbar-slot {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  padding: var(--editor-pane-toolbar-offset, 10px) var(--editor-stack-inline-padding, 18px)
+    var(--editor-pane-toolbar-gap, 18px);
+}
+
+.editor-stack {
+  --editor-stack-top-padding: 14px;
+  --editor-stack-inline-padding: 18px;
+  min-height: 0;
+  height: 100%;
+  overflow: auto;
+  padding: var(--editor-stack-top-padding) var(--editor-stack-inline-padding) 2.5rem;
+  margin: 0;
+}
+
+.editor-stack > .panel-card {
+  width: min(100%, var(--shell-editor-content-max-width));
+  justify-self: start;
+}
+
+.editor-stack.editor-stack-json {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+  padding-bottom: 12px;
+}
+
+.editor-stack.editor-stack-presets {
+  padding-top: 0;
+}
+
+.editor-pane-footer {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px 18px 20px;
+  border-top: 1px solid var(--hairline-faint);
+}
+
+.editor-footer-actions {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  max-width: var(--shell-editor-content-max-width);
+  margin-left: auto;
+}
+
+.editor-download-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--download-control-border, var(--field-border)) 74%,
+      var(--download-control-accent, var(--accent)) 26%
+    );
+  border-radius: 14px;
+  background: var(--download-control-surface, var(--field-bg));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: visible;
+}
+
+.editor-export-file {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 14px;
+}
+
+.editor-export-file-name {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--download-control-text, var(--text));
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editor-pane-footer .download-menu-list {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: auto;
+  right: 0;
+  border-color: color-mix(
+    in srgb,
+    var(--download-control-border, var(--button-border-hover)) 66%,
+    var(--download-control-accent, var(--accent)) 34%
+  );
+  background: var(--download-control-panel, var(--panel-recessed-strong));
+  box-shadow: 0 16px 30px color-mix(in srgb, var(--download-control-glow, var(--accent)) 14%, transparent),
+    0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.editor-pane-footer .download-menu-item {
+  color: var(--download-control-text, var(--text));
+}
+
+.editor-pane-footer .download-menu-item:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--download-control-border, var(--button-border)) 62%,
+    var(--download-control-accent, var(--accent)) 38%
+  );
+  background: color-mix(
+    in srgb,
+    var(--download-control-accent, var(--accent)) 12%,
+    var(--download-control-surface, var(--button-bg))
+  );
+}
+
+.editor-pane-footer .download-menu-item-file {
+  color: var(--download-control-muted, var(--text-muted));
+}
+
+.editor-share-install {
+  border: 1px solid color-mix(in srgb, var(--download-control-border, var(--field-border)) 70%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--download-control-panel, var(--panel-soft)) 48%, transparent);
+  overflow: hidden;
+}
+
+.editor-share-install-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.editor-share-install-summary:hover {
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 6%, transparent);
+}
+
+.editor-share-install-summary::-webkit-details-marker {
+  display: none;
+}
+
+.editor-share-install-summary::marker {
+  content: '';
+}
+
+.editor-share-install-label {
+  color: var(--download-control-text, var(--text));
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.editor-share-install-caret {
+  color: var(--download-control-muted, var(--text-muted));
+  font-size: 0.76rem;
+  transition: transform 150ms ease;
+}
+
+.editor-share-install[open] .editor-share-install-caret {
+  transform: rotate(180deg);
+}
+
+.editor-share-install .install-command-card {
+  padding: 0 14px 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.install-command-card {
+  display: grid;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--download-control-border, var(--field-border)) 72%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--download-control-panel, var(--panel-soft)) 74%, transparent);
+}
+
+.install-command-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.install-command-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.install-command-label {
+  margin: 0;
+  color: var(--download-control-text, var(--text));
+  font-size: 0.69rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.install-command-caption {
+  margin: 2px 0 0;
+  color: var(--download-control-muted, var(--text-muted));
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.install-command-copy {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--download-control-border, var(--field-border)) 68%, transparent);
+  border-radius: 999px;
+  background: var(--download-control-surface, var(--button-bg));
+  color: var(--download-control-text, var(--text));
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.install-command-copy:hover:not(:disabled) {
+  border-color: var(--download-control-accent, var(--accent));
+  background: color-mix(in srgb, var(--download-control-accent, var(--accent)) 12%, var(--download-control-surface, var(--button-bg)));
+}
+
+.install-command-copy:disabled {
+  opacity: 0.58;
+}
+
+.install-command-shell {
+  overflow: auto;
+  padding: 10px 11px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--download-control-surface, var(--field-bg)) 80%, black 20%);
+}
+
+.install-command-code {
+  display: block;
+  color: var(--download-control-text, var(--text));
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.editor-stack::-webkit-scrollbar {
+  width: 10px;
+}
+
+.editor-stack::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--scrollbar-thumb);
+  background-clip: padding-box;
+}
