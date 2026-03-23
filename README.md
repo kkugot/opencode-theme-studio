@@ -105,6 +105,10 @@ Optional project default in `.opencode/tui.json`:
 - Shared URLs hydrate the editor before local draft restore, so collaborators land on the intended version immediately.
 - Install and share commands use a compressed payload that contains the full dark + light theme bundle, not just the current mode.
 
+## Project command
+
+- This repo includes `.opencode/commands/release.md`, so inside OpenCode you can run `/release patch`, `/release minor`, or `/release major` to follow the standard release workflow for Theme Studio.
+
 ## Local development
 
 ```bash
