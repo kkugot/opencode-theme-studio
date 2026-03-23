@@ -7,7 +7,7 @@ import {
 import { normalizeColorValue } from '../../domain/theme/color'
 import type { ThemeMode, ThemeTokenName, ThemeTokens } from '../../domain/theme/model'
 
-export type JsonThemeModeUpdates = Partial<Record<ThemeMode, ThemeTokens>>
+export type JsonThemeModeUpdates = Partial<Record<ThemeMode, Partial<ThemeTokens>>>
 
 export type ParseJsonThemeResult =
   | {
@@ -127,31 +127,92 @@ function parseCombinedTheme(
 ): ParseJsonThemeResult {
   const darkTheme = {} as ThemeTokens
   const lightTheme = {} as ThemeTokens
+  const darkModeUpdates: Partial<ThemeTokens> = {}
+  const lightModeUpdates: Partial<ThemeTokens> = {}
+  let hasDarkValues = false
+  let hasLightValues = false
 
   for (const token of tokenNames) {
     const tokenValue = theme[token]
 
-    if (!isRecord(tokenValue) || typeof tokenValue.dark !== 'string' || typeof tokenValue.light !== 'string') {
+    if (!isRecord(tokenValue)) {
       return {
         ok: false,
-        error: `Token \`${token}\` must include string \`dark\` and \`light\` values`,
+        error: `Token \`${token}\` must be an object with string \`dark\` and/or \`light\` values`,
       }
     }
 
-    const resolvedDark = resolveThemeTokenColor(tokenValue.dark, defs, token)
+    const rawDark = tokenValue.dark
+    const rawLight = tokenValue.light
 
-    if (!resolvedDark.ok) {
+    if (rawDark !== undefined && typeof rawDark !== 'string') {
+      return {
+        ok: false,
+        error: `Token \`${token}\` \`dark\` value must be a string when provided`,
+      }
+    }
+
+    if (rawLight !== undefined && typeof rawLight !== 'string') {
+      return {
+        ok: false,
+        error: `Token \`${token}\` \`light\` value must be a string when provided`,
+      }
+    }
+
+    if (rawDark === undefined && rawLight === undefined) {
+      return {
+        ok: false,
+        error: `Token \`${token}\` must include a string \`dark\` or \`light\` value`,
+      }
+    }
+
+    const resolvedDark =
+      rawDark === undefined
+        ? null
+        : resolveThemeTokenColor(rawDark, defs, token)
+
+    if (resolvedDark && !resolvedDark.ok) {
       return { ok: false, error: resolvedDark.error }
     }
 
-    const resolvedLight = resolveThemeTokenColor(tokenValue.light, defs, token)
+    const resolvedLight =
+      rawLight === undefined
+        ? null
+        : resolveThemeTokenColor(rawLight, defs, token)
 
-    if (!resolvedLight.ok) {
+    if (resolvedLight && !resolvedLight.ok) {
       return { ok: false, error: resolvedLight.error }
     }
 
-    darkTheme[token] = resolvedDark.value
-    lightTheme[token] = resolvedLight.value
+    if (resolvedDark) {
+      darkModeUpdates[token] = resolvedDark.value
+      darkTheme[token] = resolvedDark.value
+      hasDarkValues = true
+    }
+
+    if (resolvedLight) {
+      lightModeUpdates[token] = resolvedLight.value
+      lightTheme[token] = resolvedLight.value
+      hasLightValues = true
+    }
+
+    if (!resolvedDark && resolvedLight) {
+      darkTheme[token] = resolvedLight.value
+    }
+
+    if (!resolvedLight && resolvedDark) {
+      lightTheme[token] = resolvedDark.value
+    }
+  }
+
+  const modeThemes: JsonThemeModeUpdates = {}
+
+  if (hasDarkValues) {
+    modeThemes.dark = darkModeUpdates
+  }
+
+  if (hasLightValues) {
+    modeThemes.light = lightModeUpdates
   }
 
   return {
@@ -159,10 +220,7 @@ function parseCombinedTheme(
     value: {
       format: 'combined',
       themeFile: exportCombinedThemeFile(darkTheme, lightTheme),
-      modeThemes: {
-        dark: darkTheme,
-        light: lightTheme,
-      },
+      modeThemes,
     },
   }
 }
@@ -244,7 +302,7 @@ export function parseJsonThemeFile(value: string, tokenNames: ThemeTokenName[], 
 
     return {
       ok: false,
-      error: `Token \`${token}\` must be a string or an object with \`dark\` and \`light\``,
+      error: `Token \`${token}\` must be a string or an object with \`dark\` and/or \`light\``,
     }
   }
 

@@ -24,10 +24,13 @@ describe('color helpers', () => {
     expect(normalizeColorValue(' #AbC ')).toBe('#aabbcc')
     expect(normalizeColorValue('#abcd')).toBe('#aabbccdd')
     expect(normalizeColorValue('#ABCDEF')).toBe('#abcdef')
+    expect(normalizeColorValue('Teal')).toBe('#008080')
+    expect(normalizeColorValue('rebeccapurple')).toBe('#663399')
     expect(normalizeColorValue('none')).toBe('transparent')
     expect(normalizeColorValue('transparent')).toBe('transparent')
     expect(normalizeColorValue('rgb(1, 2, 3)')).toBeNull()
     expect(isColorValue('#123456')).toBe(true)
+    expect(isColorValue('teal')).toBe(true)
     expect(isColorValue('oops')).toBe(false)
   })
 
@@ -49,6 +52,12 @@ describe('color helpers', () => {
       g: 0,
       b: 0,
       a: 0,
+    })
+    expect(parseColor('teal')).toEqual({
+      r: 0,
+      g: 128,
+      b: 128,
+      a: 1,
     })
     expect(parseColor('invalid')).toBeNull()
 
@@ -95,6 +104,7 @@ describe('color helpers', () => {
   it('normalizes equality and color input helpers', () => {
     expect(areColorValuesEqual('#abc', '#aabbcc')).toBe(true)
     expect(areColorValuesEqual('transparent', 'none')).toBe(true)
+    expect(areColorValuesEqual('teal', '#008080')).toBe(true)
     expect(areColorValuesEqual('#abc', '#000000')).toBe(false)
 
     expect(getColorInputValue('#12345680')).toBe('#123456')
