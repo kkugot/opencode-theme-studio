@@ -40,7 +40,9 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-.opencode/
+.opencode/*
+!.opencode/commands/
+!.opencode/commands/*.md
 .vite/
 
 # Snowpack dependency directory (https://snowpack.dev/)
