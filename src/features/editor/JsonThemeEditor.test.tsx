@@ -66,7 +66,7 @@ describe('JsonThemeEditor', () => {
           {
             $schema: 'https://opencode.ai/theme.json',
             defs: {
-              'dark-text': '#111111',
+              'dark-text': 'teal',
               'light-text': '#EEE',
             },
             theme: exportCombinedThemeFile(darkTheme as typeof props.themeFile.theme, lightTheme as typeof props.themeFile.theme).theme,
@@ -81,7 +81,7 @@ describe('JsonThemeEditor', () => {
 
     expect(payload.dark).toEqual(
       expect.objectContaining({
-        text: '#111111',
+        text: '#008080',
       }),
     )
     expect(payload.light).toEqual(
@@ -89,6 +89,70 @@ describe('JsonThemeEditor', () => {
         text: '#eeeeee',
       }),
     )
+  })
+
+  it('applies a dark-only combined edit and leaves light mode unchanged', () => {
+    const props = buildProps('dark')
+    const darkOnlyTheme = Object.fromEntries(
+      props.tokenNames.map((token) => [token, { dark: token === 'text' ? 'teal' : props.combinedThemeFile.theme[token].dark }]),
+    )
+
+    render(<JsonThemeEditor {...props} />)
+
+    fireEvent.change(screen.getByLabelText('Theme JSON editor'), {
+      target: {
+        value: JSON.stringify(
+          {
+            $schema: 'https://opencode.ai/theme.json',
+            theme: darkOnlyTheme,
+          },
+          null,
+          2,
+        ),
+      },
+    })
+
+    const payload = props.onChange.mock.lastCall?.[0]
+
+    expect(payload.dark).toEqual(
+      expect.objectContaining({
+        text: '#008080',
+      }),
+    )
+    expect(payload.light).toBeUndefined()
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  })
+
+  it('applies a light-only combined edit and leaves dark mode unchanged', () => {
+    const props = buildProps('dark')
+    const lightOnlyTheme = Object.fromEntries(
+      props.tokenNames.map((token) => [token, { light: token === 'text' ? 'teal' : props.combinedThemeFile.theme[token].light }]),
+    )
+
+    render(<JsonThemeEditor {...props} />)
+
+    fireEvent.change(screen.getByLabelText('Theme JSON editor'), {
+      target: {
+        value: JSON.stringify(
+          {
+            $schema: 'https://opencode.ai/theme.json',
+            theme: lightOnlyTheme,
+          },
+          null,
+          2,
+        ),
+      },
+    })
+
+    const payload = props.onChange.mock.lastCall?.[0]
+
+    expect(payload.dark).toBeUndefined()
+    expect(payload.light).toEqual(
+      expect.objectContaining({
+        text: '#008080',
+      }),
+    )
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
 
   it('shows the current mixed-format validation error', () => {
@@ -182,11 +246,17 @@ describe('JsonThemeEditor', () => {
             props.onChange(modeThemes)
 
             if (modeThemes.dark) {
-              setDarkTheme(modeThemes.dark)
+              setDarkTheme((current) => ({
+                ...current,
+                ...modeThemes.dark,
+              }))
             }
 
             if (modeThemes.light) {
-              setLightTheme(modeThemes.light)
+              setLightTheme((current) => ({
+                ...current,
+                ...modeThemes.light,
+              }))
             }
           }}
         />

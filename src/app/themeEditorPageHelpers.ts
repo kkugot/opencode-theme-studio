@@ -52,7 +52,11 @@ export function applyJsonModeThemes(
     }
 
     const currentThemeFile = selectExportThemeFile(draft, mode)
-    const hasChanges = tokenNames.some((token) => currentThemeFile.theme[token] !== modeTheme[token])
+    const nextTheme = {
+      ...currentThemeFile.theme,
+      ...modeTheme,
+    } satisfies ThemeTokens
+    const hasChanges = tokenNames.some((token) => currentThemeFile.theme[token] !== nextTheme[token])
 
     if (!hasChanges) {
       continue
@@ -60,7 +64,7 @@ export function applyJsonModeThemes(
 
     replaceModeDraft(mode, {
       ...draft.modes[mode],
-      tokenOverrides: modeTheme,
+      tokenOverrides: nextTheme,
     })
   }
 }

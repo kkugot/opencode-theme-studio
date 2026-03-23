@@ -1,3 +1,5 @@
+import { CSS_NAMED_COLORS } from './namedColors'
+
 export type ParsedColor = {
   r: number
   g: number
@@ -29,17 +31,24 @@ export function clampAlpha(value: number) {
 
 export function normalizeColorValue(value: string) {
   const trimmed = value.trim()
+  const lowered = trimmed.toLowerCase()
 
-  if (TRANSPARENT_COLOR_PATTERN.test(trimmed)) {
+  if (TRANSPARENT_COLOR_PATTERN.test(lowered)) {
     return 'transparent'
   }
 
-  if (HEX_3_COLOR_PATTERN.test(trimmed) || HEX_4_COLOR_PATTERN.test(trimmed)) {
-    return expandShortHex(trimmed.toLowerCase())
+  if (HEX_3_COLOR_PATTERN.test(lowered) || HEX_4_COLOR_PATTERN.test(lowered)) {
+    return expandShortHex(lowered)
   }
 
-  if (HEX_6_COLOR_PATTERN.test(trimmed) || HEX_8_COLOR_PATTERN.test(trimmed)) {
-    return trimmed.toLowerCase()
+  if (HEX_6_COLOR_PATTERN.test(lowered) || HEX_8_COLOR_PATTERN.test(lowered)) {
+    return lowered
+  }
+
+  const namedColor = CSS_NAMED_COLORS[lowered as keyof typeof CSS_NAMED_COLORS]
+
+  if (namedColor !== undefined) {
+    return namedColor
   }
 
   return null
